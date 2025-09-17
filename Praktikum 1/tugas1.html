@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 1 Javascript</title>
+</head>
+<body style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+    <!-- Persegi Panjang -->
+    <div id="container_persegi_panjang" style="display: flex; flex-direction: column; text-align: center; gap: 4px; border: solid 2px; width: 500px; border: solid 2px; width: 500px;">
+        <h2>Hitung Luas Persegi Panjang</h2>
+        <form id="formHitung" onsubmit="return false">
+            <label for="panjang">Panjang</label>
+            <input min="0" type="number" id="panjang" style="border: solid 1px;">
+            <br>
+            <label for="lebar">Lebar</label>
+            <input min="0" type="number" id="lebar" style="border: solid 1px;">
+            <br>
+            <button type="button" id="btnHitungLuasPersegiPanjang" style="border: solid 1px; margin: 4px 0 4px 0;">Hitung Luas</button>
+            <br>
+        </form>
+        <strong>
+            <div id="hasilPersegiPanjang"></div>
+        </strong>
+    </div>
+
+    <!-- Bujur Sangkar -->
+    <div id="container_bujur_sangkar" style="display: flex; flex-direction: column; text-align: center; gap: 4px; border: solid 2px; width: 500px;">
+        <h2>Hitung Luas Bujur Sangkar</h2>
+        <form id="formHitung" onsubmit="return false">
+            <label for="sisi">Sisi</label>
+            <input min="0" type="number" id="sisi" style="border: solid 1px;">
+            <br>
+            <button type="button" id="btnHitungLuasBujurSangkar" style="border: solid 1px; margin: 4px 0 4px 0;">Hitung Luas</button>
+            <br>
+        </form>
+        <strong>
+            <div id="hasilBujurSangkar"></div>
+        </strong>
+    </div>
+
+    <!-- Segitiga -->
+    <div id="container_segitiga" style="display: flex; flex-direction: column; text-align: center; gap: 4px; border: solid 2px; width: 500px;">
+        <h2>Hitung Luas Segitiga</h2>
+        <form id="formHitung" onsubmit="return false">
+            <label for="alas">Alas</label>
+            <input min="0" type="number" id="alas" style="border: solid 1px;">
+            <br>
+            <label for="tinggi">Tinggi</label>
+            <input min="0" type="number" id="tinggi" style="border: solid 1px;">
+            <br>
+            <button type="button" id="btnHitungLuasSegitiga" style="border: solid 1px; margin: 4px 0 4px 0;">Hitung Luas</button>
+            <br>
+        </form>
+        <strong>
+            <div id="hasilSegitiga"></div>
+        </strong>
+    </div>
+
+    <script>
+        // Fungsi untuk hitung luas persegi panjang
+        document.getElementById('btnHitungLuasPersegiPanjang').addEventListener('click', () => {
+            const container = document.getElementById('hasilPersegiPanjang');
+            const panjang = parseInt(document.getElementById('panjang').value) || 0;
+            const lebar = parseInt(document.getElementById('lebar').value) || 0;
+            const luas_persegi_panjang = panjang * lebar;
+
+            container.innerHTML = `<h3>Luas Persegi panjang: ${luas_persegi_panjang}</h3>`;
+        });
+
+        // Fungsi untuk hitung luas bujur sangkar
+        document.getElementById('btnHitungLuasBujurSangkar').addEventListener('click', () => {
+            const container = document.getElementById('hasilBujurSangkar');
+            const sisi = parseInt(document.getElementById('sisi').value) || 0;
+            const luas_bujur_sangkar = sisi**2;
+
+            container.innerHTML = `<h3>Luas Bujur Sangkar: ${luas_bujur_sangkar}</h3>`;
+        });
+
+        // Fungsi untuk hitung luas segitiga
+        document.getElementById('btnHitungLuasSegitiga').addEventListener('click', () => {
+            const container = document.getElementById('hasilSegitiga');
+            const alas = parseInt(document.getElementById('alas').value) || 0;
+            const tinggi = parseInt(document.getElementById('tinggi').value) || 0;
+            const luas_segitiga = 1/2 * alas * tinggi;
+
+            container.innerHTML = `<h3>Luas Segitiga: ${luas_segitiga}</h3>`;
+        });
+    </script>
+</body>
+</html>
