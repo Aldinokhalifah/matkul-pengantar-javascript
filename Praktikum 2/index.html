@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 2 Javascript</title>
+</head>
+<body>
+    <center>
+        <table>
+            <thead>
+                <tr style="background-color: gray;">
+                    <th style="padding: 4px; border: solid 2px;">Nama</th>
+                    <th style="padding: 4px; border: solid 2px;">Umur</th>
+                    <th style="padding: 4px; border: solid 2px;">Jabatan</th>
+                    <th style="padding: 4px; border: solid 2px;">Status</th>
+                    <th style="padding: 4px; border: solid 2px;">Gaji Pokok</th>
+                    <th style="padding: 4px; border: solid 2px;">Tunjangan Jabatan</th>
+                    <th style="padding: 4px; border: solid 2px;">BPJS</th>
+                    <th style="padding: 4px; border: solid 2px;">Tunjangan Keluarga</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="text-align: center;">
+                    <td style="padding: 4px; border: solid 2px; text-transform: capitalize;">dodi prayodi</td>
+                    <td style="padding: 4px; border: solid 2px;">25 Tahun</td>
+                    <td style="padding: 4px; border: solid 2px;" id="jabatan-cell"></td>
+                    <td style="padding: 4px; border: solid 2px;" id="status-cell"></td>
+                    <td style="padding: 4px; border: solid 2px;" id="gajiPokok-cell"></td>
+                    <td style="padding: 4px; border: solid 2px;" id="tunjanganJabatan-cell"></td>
+                    <td style="padding: 4px; border: solid 2px;" id="bpjs-cell"></td>
+                    <td style="padding: 4px; border: solid 2px;" id="tunjanganKeluarga-cell"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr style="background-color: gray;">
+                    <th style="padding: 4px; border: solid 2px;">Total Gaji</th>
+                    <th style="padding: 4px; border: solid 2px;" colspan="7" id="totalGaji-cell"></th>
+                </tr>
+            </tfoot>
+        </table>
+    </center>
+
+    <script>
+        let status_cell = document.getElementById('status-cell');
+        let jabatan_cell = document.getElementById('jabatan-cell');
+        let gajiPokok_cell = document.getElementById('gajiPokok-cell');
+        let tunjanganJabatan_cell = document.getElementById('tunjanganJabatan-cell');
+        let bpjs_cell = document.getElementById('bpjs-cell');
+        let tunjanganKeluarga_cell = document.getElementById('tunjanganKeluarga-cell');
+        let totalGaji_cell = document.getElementById('totalGaji-cell');
+
+        status_cell.textContent = 'Menikah';
+        jabatan_cell.textContent = 'Manajer';
+
+        let gajiPokok = 0;
+        if (jabatan_cell.textContent == 'Manajer') {
+            gajiPokok = 15000000;
+        } else if (jabatan_cell.textContent == 'Asisten Manajer') {
+            gajiPokok = 10000000;
+        } else {
+            gajiPokok = 5000000;
+        }
+        
+        let tunjanganJabatan = gajiPokok * 0.15;
+        let bpjs = gajiPokok * 0.1;
+        let tunjanganKeluarga = status_cell ? gajiPokok * 0.2 : 0;
+        let totalGaji = gajiPokok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+
+        gajiPokok_cell.textContent = "Rp" + gajiPokok.toLocaleString('id-ID');
+        tunjanganJabatan_cell.textContent = "Rp" + tunjanganJabatan.toLocaleString('id-ID');
+        bpjs_cell.textContent = "Rp" + bpjs.toLocaleString('id-ID');
+        tunjanganKeluarga_cell.textContent = "Rp" + tunjanganKeluarga.toLocaleString('id-ID');
+        totalGaji_cell.textContent = totalGaji.toLocaleString('id-ID');
+    </script>
+</body>
+</html>
