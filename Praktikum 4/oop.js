@@ -21,10 +21,10 @@ class Pelanggan {
     }
 }
 
-const pelanggan1 = new Pelanggan();
+const pelanggan = new Pelanggan();
 
-pelanggan1.sewaKendaraan("Aldino", 908122193, "Mobil");
-pelanggan1.getInfo();
+pelanggan.sewaKendaraan("Aldino", 908122193, "Mobil");
+pelanggan.getInfo();
 
-pelanggan1.sewaKendaraan("Putra", 28391121, "Motor");
-pelanggan1.getInfo();
+pelanggan.sewaKendaraan("Putra", 28391121, "Motor");
+pelanggan.getInfo();
