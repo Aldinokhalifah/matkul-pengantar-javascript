@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tugas 5 JS</title>
+</head>
+<body>
+    <h2>Manajemen Produk Toko Online</h2>
+
+    <input type="text" id="inputProduk" placeholder="Nama Produk">
+    <button id="btnTambah">Tambah Produk</button>
+    <br><br>
+
+    <input type="text" id="inputHapus" placeholder="Nama Produk yang dihapus">
+    <button id="btnHapus">Hapus Produk</button>
+    <br><br>
+
+    <button id="btnTampil">Tampilkan Semua Produk</button>
+
+    <ol id="daftarProduk"></ol>
+
+    <script>
+        let produk = ["Laptop", "Mouse", "Keyboard", "Monitor", "Headset"];
+
+        function tampilkanProduk() {
+            const ul = document.getElementById("daftarProduk");
+            ul.innerHTML = ""; 
+            produk.forEach((p) => {
+                const li = document.createElement("li");
+                li.textContent = `${p}`;
+                ul.appendChild(li);
+            });
+        }
+
+        function tambahProduk(...itemBaru) {  
+            produk = [...produk, ...itemBaru];
+            alert(`Produk "${itemBaru}" berhasil ditambahkan!`);
+            tampilkanProduk();
+        }
+
+        function hapusProduk(namaProduk) {
+            const [found] = produk.filter(p => p === namaProduk); 
+            if (found) {
+                produk = produk.filter(p => p !== namaProduk);
+                alert(`Produk "${namaProduk}" berhasil dihapus!`);
+                tampilkanProduk();
+            } else {
+                alert(`Produk "${namaProduk}" tidak ditemukan!`);
+            }
+        }
+
+        document.getElementById("btnTambah").addEventListener("click", () => {
+            const input = document.getElementById("inputProduk");
+            if (input.value.trim() !== "") {
+                tambahProduk(input.value);
+                input.value = "";
+            }
+        });
+
+        document.getElementById("btnHapus").addEventListener("click", () => {
+            const input = document.getElementById("inputHapus");
+            if (input.value.trim() !== "") {
+                hapusProduk(input.value);
+                input.value = "";
+            }
+        });
+
+        document.getElementById("btnTampil").addEventListener("click", tampilkanProduk);
+
+        tampilkanProduk();
+    </script>
+</body>
+</html>
