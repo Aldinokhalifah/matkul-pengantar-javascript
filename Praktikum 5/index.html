@@ -3,69 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <title>Tugas 5 JS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #daftarProduk {
+            margin-top: 20px;
+        }
+        .produk-item {
+            background-color: #f8f9fa;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
 </head>
 <body>
     <h2>Manajemen Produk Toko Online</h2>
 
-    <input type="text" id="inputProduk" placeholder="Nama Produk">
-    <button id="btnTambah">Tambah Produk</button>
-    <br><br>
+    <div class="input-group">
+        <input type="text" id="inputProduk" placeholder="Nama Produk">
+        <input type="number" id="inputHarga" placeholder="Harga" min="0" step="1000">
+        <button id="btnTambah">Tambah Produk</button>
+    </div>
 
-    <input type="text" id="inputHapus" placeholder="Nama Produk yang dihapus">
-    <button id="btnHapus">Hapus Produk</button>
-    <br><br>
+    <div class="input-group">
+        <input type="number" id="inputHapus" placeholder="ID Produk yang dihapus" min="1">
+        <button id="btnHapus">Hapus Produk</button>
+    </div>
 
-    <button id="btnTampil">Tampilkan Semua Produk</button>
+    <div class="input-group">
+        <button id="btnTampil">Tampilkan Semua Produk</button>
+    </div>
 
     <ol id="daftarProduk"></ol>
 
     <script>
-        let produk = ["Laptop", "Mouse", "Keyboard", "Monitor", "Headset"];
+        let produk = [
+            { id: 1, nama: "Laptop", harga: 12000000 },
+            { id: 2, nama: "Smartphone", harga: 5000000 },
+            { id: 3, nama: "Keyboard", harga: 500000 },
+            { id: 4, nama: "Monitor", harga: 3000000 },
+            { id: 5, nama: "Headset", harga: 800000 }
+        ];
+        
+        let nextId = 6; // ID untuk produk baru selanjutnya
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(angka);
+        }
 
         function tampilkanProduk() {
-            const ul = document.getElementById("daftarProduk");
-            ul.innerHTML = ""; 
+            const ol = document.getElementById("daftarProduk");
+            ol.innerHTML = ""; 
             produk.forEach((p) => {
                 const li = document.createElement("li");
-                li.textContent = `${p}`;
-                ul.appendChild(li);
+                li.className = "produk-item";
+                li.innerHTML = `
+                    <strong>ID:</strong> ${p.id} | 
+                    <strong>Nama:</strong> ${p.nama} | 
+                    <strong>Harga:</strong> ${formatRupiah(p.harga)}
+                `;
+                ol.appendChild(li);
             });
         }
 
-        function tambahProduk(...itemBaru) {  
-            produk = [...produk, ...itemBaru];
-            alert(`Produk "${itemBaru}" berhasil ditambahkan!`);
+        function tambahProduk(nama, harga) {  
+            const produkBaru = {
+                id: nextId++,
+                nama: nama,
+                harga: parseInt(harga)
+            };
+            produk = [...produk, produkBaru];
+            alert(`Produk "${nama}" dengan harga ${formatRupiah(harga)} berhasil ditambahkan!`);
             tampilkanProduk();
         }
 
-        function hapusProduk(namaProduk) {
-            const [found] = produk.filter(p => p === namaProduk); 
+        function hapusProduk(idProduk) {
+            const id = parseInt(idProduk);
+            const found = produk.find(p => p.id === id); 
             if (found) {
-                produk = produk.filter(p => p !== namaProduk);
-                alert(`Produk "${namaProduk}" berhasil dihapus!`);
+                produk = produk.filter(p => p.id !== id);
+                alert(`Produk "${found.nama}" (ID: ${found.id}) berhasil dihapus!`);
                 tampilkanProduk();
             } else {
-                alert(`Produk "${namaProduk}" tidak ditemukan!`);
+                alert(`Produk dengan ID "${id}" tidak ditemukan!`);
             }
         }
 
         document.getElementById("btnTambah").addEventListener("click", () => {
-            const input = document.getElementById("inputProduk");
-            if (input.value.trim() !== "") {
-                tambahProduk(input.value);
-                input.value = "";
+            const inputNama = document.getElementById("inputProduk");
+            const inputHarga = document.getElementById("inputHarga");
+            
+            if (inputNama.value.trim() !== "" && inputHarga.value.trim() !== "") {
+                const harga = parseInt(inputHarga.value);
+                if (harga > 0) {
+                    tambahProduk(inputNama.value, harga);
+                    inputNama.value = "";
+                    inputHarga.value = "";
+                } else {
+                    alert("Harga harus lebih besar dari 0!");
+                }
+            } else {
+                alert("Mohon isi nama produk dan harga!");
             }
         });
 
         document.getElementById("btnHapus").addEventListener("click", () => {
             const input = document.getElementById("inputHapus");
             if (input.value.trim() !== "") {
-                hapusProduk(input.value);
-                input.value = "";
+                const id = parseInt(input.value);
+                if (id > 0) {
+                    hapusProduk(id);
+                    input.value = "";
+                } else {
+                    alert("ID harus berupa angka positif!");
+                }
+            } else {
+                alert("Mohon masukkan ID produk yang akan dihapus!");
             }
         });
 
         document.getElementById("btnTampil").addEventListener("click", tampilkanProduk);
+
+        // Event listener untuk tombol Enter pada input
+        document.getElementById("inputProduk").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("inputHarga").focus();
+            }
+        });
+
+        document.getElementById("inputHarga").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("btnTambah").click();
+            }
+        });
+
+        document.getElementById("inputHapus").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("btnHapus").click();
+            }
+        });
 
         tampilkanProduk();
     </script>
